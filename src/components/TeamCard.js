@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TeamCollapse from './TeamCollapse';
+import TeamModal from './TeamModal';
 
 const TeamCard = ({ fetchedTeams }) => {
     return(
@@ -12,7 +13,8 @@ const TeamCard = ({ fetchedTeams }) => {
                             <div className = "card border-0 mb-4">
                                 <h2>{team.name}</h2>
                             </div>
-                            <TeamCollapse team={team} message="Hi there, I'm a passed prop."/>
+                            {/* <TeamCollapse team={team}/> */}
+                            <TeamModal team={team}/>
                         </div>
                     </div>
                 )

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React, { Component } from 'react';
-import { Collapse, UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
+import { Collapse, Button, CardBody, Card } from 'reactstrap';
 
 class TeamCollapse extends Component {
     constructor(props) {
@@ -10,55 +10,62 @@ class TeamCollapse extends Component {
         this.state = { 
             collapse: false,
             unclicked: true,
-            teamStats: [],
-            teamRanks: [],
+            wins: null,
+            losses: null,
+            ot: null,
+            winsRank: "",
+            status: "status"
         };
-        
     }
-  
+
     toggle = () => {
-        this.handleGetRequest();
-        this.setState({ collapse: !this.state.collapse, unclicked: false});
-        // if(this.state.unclicked){
-        //     this.handleGetRequest();
-        //     console.log(this.props.team.id)
-        // }
+        this.setState(
+            { 
+                collapse: !this.state.collapse, 
+                unclicked: false,
+            }
+        );
     };
 
     handleGetRequest = async () => {
         const id = this.props.team.id
         const url = `https://statsapi.web.nhl.com/api/v1/teams/${id}/stats`;
-    
-        try{
-            const response = await fetch(url);
-            const data = await response.json();
-            this.setState({
-                teamStats: data.stats[0]
-            })
-            console.log(`Data from the JSON object response: ${data.stats[0].splits[0].stat.wins}`);
-            console.log(`Data from the state: ${this.state.teamStats}`)
-        }catch(err){
-        console.log(err);
-        }; 
+        
+        if(this.state.unclicked) { 
+            try{
+                const response = await fetch(url);
+                const data = await response.json();
+                this.setState({
+                    teamStats: data.stats[0],
+                    wins: data.stats[0].splits[0].stat.wins,
+                    losses: data.stats[0].splits[0].stat.losses,
+                    ot: data.stats[0].splits[0].stat.ot,
+                    winsRank: data.stats[1].splits[0].stat.wins,
+                }, 
+                    this.toggle
+                );
+                console.log("GET executed.");
+            }catch(err){
+                console.log(err);
+            }
+        } else {
+            this.toggle();
+            console.log("GET NOT executed.")
+        }
         
     };
 
     render() {
         const team = this.props.team;
-        console.log(this.state.teamStats.splits)
-        // const stats = this.state.teamStats[0].splits[0].stat;
-        // const ranks = this.state.teamStats.stats[1].splits[0].stat;
-
-        
+        const stat = this.state;
 
         return (
             <div>
-                <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Toggle</Button>
+                <Button color="primary" onClick={this.handleGetRequest} style={{ marginBottom: '1rem' }}>Toggle</Button>
                 <Collapse isOpen={this.state.collapse}>
                     <Card>
                     <CardBody>
-                        {team.name}, {team.name}
-                        {/* {stats.wins} */}
+                        Team Name: {team.name} Wins: {stat.wins}  Losses: {stat.losses} OT: {stat.ot} Rank by Wins: {stat.winsRank}
                     </CardBody>
                     </Card>
                 </Collapse>

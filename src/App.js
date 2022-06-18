@@ -4,13 +4,13 @@ import TeamModal from './components/TeamModal';
 import TeamCard from './components/TeamCard';
 import Data from './components/Data';
 
-import { Button, Collapse, Alert, Card, CardBody } from 'reactstrap';
-
 class App extends React.Component {
 
     state = {
       fetchedTeams: [],
     }
+
+//Todo: map through the response to only include relevant data, then store it in state, rather than storing entire response.
 
     async componentDidMount(){
         const url = `https://statsapi.web.nhl.com/api/v1/teams`;
@@ -18,14 +18,12 @@ class App extends React.Component {
         try{
             const response = await fetch(url);
             const data = await response.json();
-            console.log(`Immediate log after response ${data.teams}`)
+            
             this.setState({
-                fetchedTeams: data.teams
+                fetchedTeams: data.teams,
             })
-            console.log(`Logging the state ${this.state.fetchedTeams}`);
-            console.log(`Logging data ${data.teams}`);
         }catch(err){
-        console.log(err);
+            console.log(err);
         }
     }
 
