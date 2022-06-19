@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.card-style {
+  margin: 1em;
+}
+
+.page {
+  background-color:#282c34;
+}
+
+.searchResultCardText {
+  padding: 0.55rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.p-tag {
+  display: inline-block;
+}
