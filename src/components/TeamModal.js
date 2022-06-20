@@ -35,13 +35,13 @@ class TeamModal extends React.Component {
             try{
                 const response = await fetch(url);
                 const data = await response.json();
-                const stat = data.stats[0].splits[0].stat;
+                const statistics = data.stats[0].splits[0].stat;
                 const rank = data.stats[1].splits[0].stat;
 
                 this.setState({
-                    wins: stat.wins,
-                    losses: stat.losses,
-                    ot: stat.ot,
+                    wins: statistics.wins,
+                    losses: statistics.losses,
+                    ot: statistics.ot,
                     winsRank: rank.wins,
                 }, 
                     this.toggleModal
