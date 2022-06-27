@@ -6,7 +6,15 @@ import TeamCard from './components/TeamCard';
 class App extends React.Component {
 
     state = {
-      fetchedTeams: []
+      fetchedTeams: [
+        {
+            name: "",
+            division: "",
+            conference: "",
+            venue: "",
+            officialSiteUrl: ""
+        }
+      ]
     }
 
 //Todo: map through the response to only include relevant data, then store it in state, rather than storing entire response.
@@ -60,7 +68,7 @@ class App extends React.Component {
                 <Header
                     sortAtoZ={this.sortAtoZ} 
                     sortZtoA={this.sortZtoA} 
-                    clickTest={this.clickTest}
+                    // clickTest={this.clickTest}
                 />
                 <div className="container-fluid page ">
                     <div className="row">
